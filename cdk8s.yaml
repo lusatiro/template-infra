@@ -1,0 +1,5 @@
+language: typescript
+app: node dist/main.js
+output: manifests
+imports:
+  - k8s
