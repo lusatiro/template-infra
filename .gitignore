@@ -5,4 +5,4 @@ node_modules
 dist/
 manifests/
 .env
-__snapshot__
+__snapshots__/

@@ -3,8 +3,6 @@ import { App, Chart, ChartProps } from 'cdk8s';
 import { KubeDeployment, KubeService, IntOrString, KubeSecret, KubeConfigMap } from './imports/k8s';
 import { config } from 'dotenv';
 
-config();
-
 export class TemplateInfra extends Chart {
   constructor(scope: Construct, id: string, props: ChartProps = { }) {
     super(scope, id, props);
@@ -49,8 +47,8 @@ export class TemplateInfra extends Chart {
           },
           spec: {
             containers: [{
-              name: 'template-api',
-              image: 'docker.pkg.github.com/lusatiro/template-api/template-api:latest',
+              name: process.env.DOCKER_CONTAINER_NAME || '',
+              image: process.env.DOCKER_REGISTRY,
               ports: [{
                 containerPort: port,
               }],
@@ -71,6 +69,7 @@ export class TemplateInfra extends Chart {
   }
 }
 
+config();
 const app = new App();
 new TemplateInfra(app, 'template-infra');
 app.synth();
