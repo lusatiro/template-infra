@@ -2,7 +2,7 @@ import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 import { KubeDeployment, KubeService, IntOrString, KubeSecret, KubeConfigMap } from './imports/k8s';
 import { config } from 'dotenv';
-import { ImagePullPolicy } from 'cdk8s-plus-17';
+import { ImagePullPolicy, ServiceType } from 'cdk8s-plus-17';
 
 export class TemplateInfra extends Chart {
   constructor(scope: Construct, id: string, props: ChartProps = { }) {
@@ -27,7 +27,7 @@ export class TemplateInfra extends Chart {
 
     new KubeService(this, 'service', {
       spec: {
-        type: 'LoadBalancer',
+        type: ServiceType.LOAD_BALANCER,
         ports: [{
           port: 80,
           targetPort: IntOrString.fromNumber(port)
