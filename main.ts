@@ -2,6 +2,7 @@ import { Construct } from 'constructs';
 import { App, Chart, ChartProps } from 'cdk8s';
 import { KubeDeployment, KubeService, IntOrString, KubeSecret, KubeConfigMap } from './imports/k8s';
 import { config } from 'dotenv';
+import { ImagePullPolicy } from 'cdk8s-plus-17';
 
 export class TemplateInfra extends Chart {
   constructor(scope: Construct, id: string, props: ChartProps = { }) {
@@ -52,7 +53,7 @@ export class TemplateInfra extends Chart {
               ports: [{
                 containerPort: port,
               }],
-              imagePullPolicy: 'Always',
+              imagePullPolicy: ImagePullPolicy.IF_NOT_PRESENT,
               envFrom: [{
                 configMapRef: {
                   name: configMap.name
